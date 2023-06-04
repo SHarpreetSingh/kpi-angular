@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.align-center {
+    text-align: center;
+}
+
+.mat-drawer-backdrop.mat-drawer-shown {
+    background-color: unset !important;
+}
+
+.mat-drawer-backdrop.mat-drawer-shown {
+    visibility: hidden !important;
+}

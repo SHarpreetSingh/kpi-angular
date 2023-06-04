@@ -1,0 +1,26 @@
+<mat-toolbar color="primary" *ngIf="hasLoggedIn">
+  <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+    <mat-icon *ngIf="!sidenav.opened">
+      menu
+    </mat-icon>
+    <mat-icon *ngIf="sidenav.opened">
+      close
+    </mat-icon>
+  </button>
+  <span>CN Task</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon">
+    <mat-icon>person</mat-icon>
+  </button>
+  <button mat-icon-button class="example-icon" (click)="userLoggedOut()">
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-toolbar color="primary" *ngIf="!hasLoggedIn">
+  <span>CN Task</span>
+  <span class="example-spacer"></span>
+  <button mat-button>
+    <mat-icon>person</mat-icon> Register
+  </button>
+</mat-toolbar>
