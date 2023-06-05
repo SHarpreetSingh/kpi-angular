@@ -14,21 +14,34 @@ import { Observable, throwError } from 'rxjs';
 })
 export class KPIService {
 
-  baseUri: string = 'https://24fa-2405-201-3006-4099-38c4-3e12-8c78-6601.in.ngrok.io/api/timesheet';
+
+  baseUri: string = 'http://localhost:8080/api/timesheet';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   // Create
-  createEmployee(data:any): Observable<any> {
-    console.log("data",data)
+  createEmployee(data: any): Observable<any> {
+    console.log("data", data)
     let url = `${this.baseUri}/kpi`;
-    const response =  this.http.post(url,data).pipe(catchError(this.errorMgmt));
-    console.log("-----------:",response)
+    const response = this.http.post(url, data).pipe(catchError(this.errorMgmt));
+    console.log("-----------:", response)
     return response
   }
+
+  createKpiMatrx(data: any): Observable<any> {
+    let url = `${this.baseUri}/kpiMatrics`;
+    const response = this.http.post(url, data).pipe(catchError(this.errorMgmt));
+    return response
+  }
+
+
   // Get all employees
-  // getEmployees() {
-  //   return this.http.get(`${this.baseUri}`);
-  // }
+  getEmployees() {
+    return this.http.get(`${this.baseUri}/kpi`);
+  }
+
+  readKpimtrx() {
+    return this.http.get(`${this.baseUri}/kpiMatrics`);
+  }
 
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';

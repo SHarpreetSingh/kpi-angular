@@ -10,13 +10,13 @@ export class KpiListComponent implements OnInit {
 
   Employee:any = [];
   constructor(private apiService: KPIService) { 
-    // this.readEmployee();
+    this.readEmployee();
   }
   ngOnInit() {}
-  // readEmployee(){
-  //   this.apiService.getEmployees().subscribe((data) => {
-  //    this.Employee = data;
-  //   })    
-  // }
+  readEmployee(){
+    this.apiService.getEmployees().subscribe((data) => {
+     this.Employee = data;
+    })    
+  }
 
 }

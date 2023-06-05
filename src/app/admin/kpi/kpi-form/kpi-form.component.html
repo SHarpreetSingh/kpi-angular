@@ -1,106 +1,131 @@
 <div class="row justify-content-center">
-    <div class="col-md-4 register-employee">
-      <!-- form card register -->
-      <div class="card-body">
-        <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label for="inputName">Name</label>
-            <input class="form-control" type="text" formControlName="name" />
-            <!-- error -->
-            <div
-              class="invalid-feedback"
-              
-            >
-              Name is required.
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputEmail3">Email</label>
-            <input class="form-control" type="text" formControlName="email" />
-            <!-- error -->
-            <div
-              class="invalid-feedback"
-             
-            >
-              Enter your email.
-            </div>
-            <div
-              class="invalid-feedback"
-            >
-              Enter valid email.
-            </div>
-          </div>
-          <!-- <div class="form-group">
-            <label for="inputPassword3">Designation</label>
-            <select
-              class="custom-select form-control"
-              (change)="updateProfile($event.target.value)"
-              formControlName="designation"
-            >
-              <option value="">Choose...</option>
-              <option
-                *ngFor="let employeeProfile of EmployeeProfile"
-                value="{{ employeeProfile }}"
-              >
-                {{ employeeProfile }}
-              </option>
-            </select>
-            <div
-              class="invalid-feedback"
-              *ngIf="submitted && myForm['designation'].errors?.['required']"
-            >
-              Choose designation.
-            </div>
-          </div>  -->
-          <!-- <div class="form-group">
-            <label for="inputPassword3">Designation</label>
-            <select
-              class="custom-select form-control"
-              (change)="updateProfile($event.target.value)"
-              formControlName="designation"
-            >
-              <option value="">Choose...</option>
-              <option
-                *ngFor="let employeeProfile of EmployeeProfile"
-                value="{{ employeeProfile }}"
-              >
-                {{ employeeProfile }}
-              </option>
-            </select>
-            <div
-              class="invalid-feedback"
-              *ngIf="submitted && myForm['designation'].errors?.['required']"
-            >
-              Choose designation.
-            </div>
-          </div> -->
-          <div class="form-group">
-            <label for="inputVerify3">Mobile No</label>
-            <input
-              class="form-control"
-              type="text"
-              formControlName="phoneNumber"
-            />
-            <!-- error -->
-            <div
-              class="invalid-feedback"
-              
-            >
-              Enter your phone number.
-            </div>
-            <div
-              class="invalid-feedback"
-              >
-              Enter Numbers Only
-            </div>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-success btn-lg btn-block" type="submit">
-              Register
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+  <div class="col-md-4 register-employee">
     <!-- form card register -->
+    <div class="card-body">
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="inputName">Name</label>
+          <input class="form-control" type="text" formControlName="name" />
+        </div>
+
+        <div class="form-group">
+          <label for="inputName">Description</label>
+          <input class="form-control" type="text" formControlName="description" />
+          <!-- error -->
+          <!-- <div class="invalid-feedback">
+            description is required.
+          </div> -->
+        </div>
+
+        <div class="form-group">
+          <br><br>
+          <input type="checkbox" id="switch" class="checkbox" formControlName="has_self_Review" />
+          <label for="switch" class="toggle" (click)="toggleDisplay()">Self review </label>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success btn-lg btn-block" type="submit">
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
+  <!-- form card register -->
+</div>
+
+<div class="container">
+  <!-- No data message -->
+  <p *ngIf="Employee.length <= 0" class="no-data text-center">There is no employee added yet!</p>
+  <!-- Employee list -->
+  <table class="table table-bordered">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">Employee ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">department_id</th>
+        <th scope="col">description</th>
+        <th scope="col center">Self</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of Employee">
+        <th scope="row">{{employee.id}}</th>
+        <td>{{employee.name}}</td>
+        <td>{{employee.department_id}}</td>
+        <td>{{employee.description}}</td>
+        <td>{{employee.has_self_Review}}</td>
+        <!-- <td class="text-center edit-block">
+          <span class="edit" [routerLink]="['/edit-employee/', employee._id]">
+            <button type="button" class="btn btn-success btn-sm">Edit</button>
+          </span>
+        </td> -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- dd -->
+
+<div class="row justify-content-center">
+  <div class="col-md-4 register-employee">
+    <!-- form card register -->
+    <div class="card-body">
+      <form [formGroup]="kpiMatrix" (ngSubmit)="onSun()">
+        <div class="form-group">
+          <label for="inputName">Kpi matrix</label>
+          <input class="form-control" type="text" formControlName="name" />
+          <!-- error -->
+        </div>
+
+        <div class="form-group">
+          <label for="inputName">tittle</label>
+          <input class="form-control" type="text" formControlName="tittle" />
+          <!-- error -->
+        </div>
+
+        <div class="form-group">
+          <label for="inputName">tooltip</label>
+          <input class="form-control" type="text" formControlName="tooltip" />
+          <!-- error -->
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-success btn-lg btn-block" type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- form card register -->
+</div>
+
+<!-- show list matrix -->
+
+<div class="container">
+  <!-- No data message -->
+  <p *ngIf="redKpiMtrx.length <= 0" class="no-data text-center">There is no employee added yet!</p>
+  <!-- Employee list -->
+  <table class="table table-bordered">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">Employee ID</th>
+        <th scope="col">Title</th>
+        <th scope="col">Tooltip</th>
+        <th scope="col">Prent_matrix_kpi</th>
+        <th scope="col">Weightage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of redKpiMtrx">
+        <th scope="row">{{employee.id}}</th>
+        <td>{{employee.tittle}}</td>
+        <td>{{employee.parent_matrix_kpi}}</td>
+        <td>{{employee.tooltip}}</td>
+        <td>{{employee.weightage}}</td>
+
+
+      </tr>
+    </tbody>
+  </table>
+</div>

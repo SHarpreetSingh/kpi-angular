@@ -9,10 +9,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./kpi-form.component.scss']
 })
 export class KpiFormComponent implements OnInit {
-
+  Employee: any = [];
+  redKpiMtrx: any = []
   submitted = false;
   employeeForm!: FormGroup;
+  kpiMatrix!: FormGroup;
   EmployeeProfile: any = ['Finance', 'BDM', 'HR', 'Sales', 'Admin'];
+  isShow = false
+  // isboll: any;
   constructor(
     public fb: FormBuilder,
     private router: Router,
@@ -20,49 +24,89 @@ export class KpiFormComponent implements OnInit {
     private apiService: KPIService
   ) {
     this.mainForm();
+    this.kpiMatForm();
+
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.readEmployee()
+    this.readKpimtrx()
+  }
+
+  readEmployee() {
+    this.apiService.getEmployees().subscribe((data: any) => {
+      this.Employee = data.result;
+      console.log("this.employe", data.result)
+    })
+  }
+
   mainForm() {
     this.employeeForm = this.fb.group({
       name: ['', [Validators.required]],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
-        ],
-      ],
-      designation: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      description: ['', [Validators.required]],
+      department_id: [12],
+      has_self_Review: false,
     });
   }
-  // Choose designation with select dropdown
-  // updateProfile(e) {
-  //   this.employeeForm.get('designation').setValue(e, {
-  //     onlySelf: true,
-  //   });
-  // }
-  // Getter to access form control
-  get myForm() {
-    return 0
-    // return this.employeeForm.controls;
+
+  kpiMatForm() {
+    this.kpiMatrix = this.fb.group({
+      name: ['', [Validators.required]],
+      tooltip: ['', [Validators.required]],
+      tittle: ['', [Validators.required]],
+    });
   }
+
+  // Getter to access form control
+  // get myForm() {
+  //   return 0
+  //   // return this.employeeForm.controls;
+  // }
   onSubmit() {
-    
+    console.log("222220", this.employeeForm.value)
     this.submitted = true;
-    if (this.employeeForm.valid) {
+    if (!this.employeeForm.valid) {
       return false;
     } else {
-      console.log("222220",this.employeeForm.value)
+      console.log("222220", this.employeeForm.value)
       return this.apiService.createEmployee(this.employeeForm.value).subscribe({
         complete: () => {
           console.log('Employee successfully created!'),
             this.ngZone.run(() => this.router.navigateByUrl('/kpi-list'));
         },
         error: (e) => {
-          console.log("error",e);
+          console.log("error", e);
         },
-      });
+      })
     }
+  }
+
+  onSun() {
+    if (!this.kpiMatrix.valid) {
+      return false;
+    } else {
+      console.log("dddd:::pp", this.kpiMatrix.value)
+      return this.apiService.createKpiMatrx(this.kpiMatrix.value).subscribe({
+        complete: () => {
+          console.log('kpi matrx successfully created!'),
+            this.ngZone.run(() => this.router.navigateByUrl('/kpi-list'));
+        },
+        error: (e: any) => {
+          console.log("error in kpi matrx", e);
+        },
+      })
+    }
+  }
+
+  toggleDisplay() {
+    this.isShow = !this.isShow;
+    console.log("this.isShow", this.isShow)
+
+  }
+
+  readKpimtrx() {
+    this.apiService.readKpimtrx().subscribe((data: any) => {
+      this.redKpiMtrx = data.result;
+      console.log("this.employe", data.result)
+    })
   }
 }
